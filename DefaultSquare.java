@@ -9,7 +9,9 @@ public class DefaultSquare extends AbstractSquare {
 	@Override
 	public void moveHere(Player thePlayer) {
 		super.moveHere(thePlayer);
-		System.out.println(thePlayer.getName() + " has moved safely to square " + this.getPosition());
+		System.out.println(thePlayer.getName() 
+				+ " has moved safely to square " 
+				+ this.getPosition());
 	}
 
 }
