@@ -1,9 +1,9 @@
 package oving7;
 
 public class BackToStart extends AbstractSquare {
-	
-	public BackToStart() {
-		super();
+
+	public BackToStart(int position) {
+		super(position);
 	}
 
 	@Override
