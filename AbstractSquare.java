@@ -7,13 +7,13 @@ public abstract class AbstractSquare implements Square {
 		this.position = position;
 	}
 
-	@Override
-	public void moveHere(Player thePlayer) {
-		
-	}
-
 	public int getPosition() {
 		return position;
+	}
+
+	@Override
+	public void moveHere(Player thePlayer) {
+		thePlayer.setPosition(this.position);
 	}
 	
 }

@@ -9,8 +9,8 @@ public class BackToStart extends AbstractSquare {
 	@Override
 	public void moveHere(Player thePlayer) {
 		thePlayer.setPosition(0);
-		System.out.println("Square " + this.getPosition() + " is unaccessable."
-				+ "\nYou have been sent back to the beginning.");
+		System.out.println("Square " + this.getPosition() + " is a wormhole.\n"
+				+ thePlayer.getName() + " has been teleported back to the beginning.");
 	}
 
 }
