@@ -7,6 +7,14 @@ import java.util.Scanner;
 
 public class Game {
 	
+	public static void write(String s) {
+		System.out.print(s);
+	}
+	
+	public static void write(int n) {
+		System.out.print(n);
+	}
+	
 	public static void printDots(int d) {
 		int speed = 200;
 		for (int i = 0; i<d; i++) {
@@ -24,11 +32,21 @@ public class Game {
 		}
 		System.out.println();
 	}
+	
+	public static List<Player> players(Scanner in) {
+		List<Player> daList = new ArrayList<Player>();
+		write("Welcome bold heroes, the quest that \nlies before you"
+				+ "will be full of dangers.\n");
+		write("Tell me, what are your names? [Ex. Joe Sue Xaviera]\n");
+		String[] names = in.nextLine().split(" ");
+		for (int i = 0; i<names.length;i++)
+			daList.add(new Player(names[i]));
+		return daList;
+	}
 
 	public static void main(String[] args) {
 		Scanner in = new Scanner(System.in);
-		System.out.print("Enter your name, if you dare: ");
-		Player daPlayer = new Player(in.nextLine());
+		List<Player> players = players(in);
 		List<AbstractSquare> daBoard = new ArrayList<AbstractSquare>();
 
 		daBoard.add(new DefaultSquare(0));
@@ -56,28 +74,42 @@ public class Game {
 		System.out.println(Collections.frequency(daBoard, new BackToStart(0)));
 		*/
 		int move = 0;
-		while (move < 20){
-			daBoard.get(move).moveHere(daPlayer);
-			System.out.print(daPlayer.getName() + "'s turn!");
-			System.out.println(" Press <ENTER> to roll die.");
-			try {
-				in.nextLine();
-			} catch (Exception e) {
-				System.out.print("Shutting down...");
+		int die = 0;
+		int winner = 0;
+		while (move < daBoard.size()){
+			for (int turn=0; turn<players.size(); turn++) {
+				
+				// NEW ROUND STARTS HERE!!!!
+				write("\n#Player###Position#######");
+				write("\n# " + players.get(turn).getName() + "\t# " + players.get(turn).getPosition() + "\t\t#");
+				write("\n#########################\n\n");
+				/*
+				System.out.println("\n" + players.get(turn).getName()
+						+ "'s turn! You're token is on square "
+						+ players.get(turn).getPosition());
+						*/
+				System.out.print("Press <ENTER> to roll die.");
+				try {in.nextLine();} catch (Exception e) {
+					System.out.print("Shutting down...");
+				}
+				die = ((int)(Math.random()*6))+1;
+				move = die + players.get(turn).getPosition();
+				System.out.println(players.get(turn).getName() + " rolled " + die + ". ");
+				if (move < daBoard.size()) {
+					System.out.println("Moving to square " + move);
+					printDots(die);
+					daBoard.get(move).moveHere(players.get(turn));
+				}
+				else {
+					printDots(daBoard.size()-players.get(turn).getPosition());
+					winner = turn;
+					break;
+				}
 			}
-			int die = ((int)(Math.random()*6))+1;
-			move = die + daPlayer.getPosition();
-			System.out.println(daPlayer.getName() + " rolled " + die + ". ");
-			if (move < 20) {
-				System.out.println("Moving to square " + move);
-				printDots(die);
-			}
-			else
-				printDots(20-daPlayer.getPosition());
 		}
 		
 		System.out.println();
-		System.out.println(daPlayer.getName() + " wins!");
+		System.out.println(players.get(winner).getName() + " wins!");
 		in.close();
 	}
 
