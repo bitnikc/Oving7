@@ -16,4 +16,12 @@ public abstract class AbstractSquare implements Square {
 		thePlayer.setPosition(this.position);
 	}
 	
+	@Override
+    public boolean equals(Object obj){
+		if (this.getClass().getSimpleName().contentEquals(obj.getClass().getSimpleName()))
+			return true;
+		else
+			return false;
+	}
+	
 }

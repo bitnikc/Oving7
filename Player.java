@@ -24,12 +24,4 @@ public class Player {
 	public void setPosition(int position) {
 		this.position = position;
 	}
-	
-	private int rollDie() {
-		return ((int)(Math.random()*6))+1;
-	}
-	
-	public int move() {
-		return position + rollDie();
-	}
 }
